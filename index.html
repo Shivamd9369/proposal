@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Shivam ❤️ Diwakar</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root {
+    --bg: #fff1f2;
+    --card: #ffffff;
+    --text: #374151;
+    --accent: #ef4444;
+}
+
+body.dark {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text: #e5e7eb;
+    --accent: #fb7185;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+    transition: 0.4s;
+}
+
+.container {
+    background: var(--card);
+    color: var(--text);
+    padding: 30px;
+    border-radius: 22px;
+    width: 90%;
+    max-width: 420px;
+    text-align: center;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+img.slide {
+    width: 90%;
+    height: 390px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
+
+h1 {
+    color: var(--accent);
+}
+
+.message {
+    margin: 15px 0;
+    font-size: 1.05rem;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+}
+
+button {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+#yesBtn {
+    background: var(--accent);
+    color: white;
+}
+
+#noBtn {
+    background: #e5e7eb;
+}
+
+#final {
+    display: none;
+    margin-top: 15px;
+    font-size: 1.2rem;
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.toggle {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+/* HEARTS */
+.heart {
+    position: absolute;
+    font-size: 26px;
+    animation: floatUp 2s ease forwards;
+    pointer-events: none;
+}
+
+@keyframes floatUp {
+    from { transform: translateY(0) scale(0.8); opacity: 1; }
+    to { transform: translateY(-140px) scale(1.8); opacity: 0; }
+}
+
+/* FIREWORKS */
+.firework {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: gold;
+    border-radius: 50%;
+    animation: explode 1s ease-out forwards;
+}
+
+@keyframes explode {
+    to {
+        transform: translate(var(--x), var(--y));
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container">
+
+<div class="toggle" onclick="toggleDark()">🌙</div>
+
+<img src="img1.jpg" class="slide" id="slide">
+
+<h1>Hey Diwakar ❤️</h1>
+<p class="message">
+I am <b>Shivam</b> 😊<br><br>
+From smiles to memories,<br>
+every moment with you is special 💕<br><br>
+<b>Will you be mine forever?</b>
+</p>
+
+<div class="buttons">
+    <button id="yesBtn" onclick="yesClicked()">YES 💍</button>
+    <button id="noBtn" onmouseover="moveNo()">NO 😅</button>
+</div>
+
+<div id="final">
+You said YES ❤️<br>
+Shivam & Diwakar Forever 💖
+</div>
+
+<br>
+<button onclick="shareWhatsApp()">📱 Share on WhatsApp</button>
+
+</div>
+
+<script>
+/* SLIDESHOW */
+const slides = ["img1.jpg","img2.jpg","img3.jpg"];
+let index = 0;
+setInterval(()=>{
+    index = (index+1)%slides.length;
+    document.getElementById("slide").src = slides[index];
+},3000);
+
+/* YES CLICK */
+function yesClicked(){
+    document.getElementById("final").style.display="block";
+    document.getElementById("bgMusic").play();
+    for(let i=0;i<20;i++) heart();
+    fireworks();
+}
+
+/* HEART */
+function heart(){
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="❤️";
+    h.style.left=Math.random()*window.innerWidth+"px";
+    h.style.bottom="0";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),2000);
+}
+
+/* FIREWORKS */
+function fireworks(){
+    for(let i=0;i<30;i++){
+        const f=document.createElement("div");
+        f.className="firework";
+        f.style.left="50%";
+        f.style.top="50%";
+        f.style.setProperty("--x",(Math.random()*300-150)+"px");
+        f.style.setProperty("--y",(Math.random()*300-150)+"px");
+        document.body.appendChild(f);
+        setTimeout(()=>f.remove(),1000);
+    }
+}
+
+/* NO BUTTON */
+function moveNo(){
+    const b=document.getElementById("noBtn");
+    b.style.position="absolute";
+    b.style.left=Math.random()*250+"px";
+    b.style.top=Math.random()*250+"px";
+}
+
+/* DARK MODE */
+function toggleDark(){
+    document.body.classList.toggle("dark");
+}
+
+/* WHATSAPP SHARE */
+function shareWhatsApp(){
+    const text="Anjali ❤️ Shivam\nShe said YES 💍💖";
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`);
+}
+</script>
+
+</body>
+</html>
